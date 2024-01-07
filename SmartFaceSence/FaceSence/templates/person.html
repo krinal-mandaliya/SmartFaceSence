@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Person</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div style="width: 50%; background-image: linear-gradient; margin-left: 350px; margin-top: 20px; margin-bottom: 20px; border-radius: 5px; padding: 30px;">
+        <p style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; font-size: 30px;">
+            Add Person Details
+        </p>
+        <form method="POST" action="{% url 'person' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row mb-3">
+                <label for="id_person_name" class="col-sm-2 col-form-label">Person Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="id_person_name" name="person_name">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="id_dob" class="col-sm-2 col-form-label">Date Of Birth</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" id="id_dob" name="dob">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="id_face_image" class="col-sm-2 col-form-label">Face Image</label>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" id="id_face_image" name="face_image">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="id_doj" class="col-sm-2 col-form-label">Date Of joining</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" id="id_doj" name="doj">
+                </div>
+            </div>
+
+            <!-- <div class="row mb-3">
+                <label for="id_scan_image" class="col-sm-2 col-form-label">Scan Image</label>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" id="id_scan_image" name="scan_image">
+                </div>
+            </div> -->
+
+            <div class="row mb-3">
+                <label for="id_person_email" class="col-sm-2 col-form-label">Person E-mail</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="id_person_email" name="person_email">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="id_phoneno" class="col-sm-2 col-form-label">Phone No</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="id_phoneno" name="phoneno">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="id_type_person" class="col-sm-2 col-form-label">Type of person</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="id_type_person" name="type_person">
+                </div>
+            </div>
+
+            {% if messages %}
+            <ul class="messages" style="color: green;">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <div style="margin-left: 250px;display: flex;">
+                <button class="btn btn-primary me-md-2" type="submit">Submit</button>
+                <p style="padding-left: 20px;"><a class="btn btn-primary" href="{% url 'admin1' %}" role="button">Back</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

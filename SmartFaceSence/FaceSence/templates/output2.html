@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Output Page</title>
+</head>
+<body>
+    <a href="{% url 'index' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+        </svg>
+    </a>
+
+    <div style="width: 90%; display: flex; margin-top: 7px; margin-left: 10px;">
+        {% block content %}
+        <div style="width: 600px;">
+            {% if last_image.scan_image %}
+                <img src="{{ last_image.scan_image.url }}" style="height: 600px;" alt="Scanned Image">
+            {% elif last_image.image %}
+                <img src="{{ last_image.image.url }}" alt="Uploaded Image" height="600px" width="500px">
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+        </div>
+        
+        {% if matching_people %}
+            <div style="border: rgb(58, 57, 57) solid; background-color: white; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5); padding: 30px; height: 300px; margin-left: 100px; margin-top: 70px;">
+                <h2><u>Person Details:</u></h2>
+                <br>
+                <p style="font-size: large; font-family: Arial, Helvetica, sans-serif;">
+                    {% for person_obj in matching_people %}
+                        <strong>Name:</strong> {{ person_obj.person_name }}<br>
+                        <strong>Age:</strong> {{ person_obj.age }}<br>
+                        <strong>Date of Joining:</strong> {{ person_obj.doj }}<br>
+                        <strong>Email ID:</strong> {{ person_obj.person_email }}<br>
+                        <strong>Phone No.:</strong> {{ person_obj.phoneno }}<br>
+                        <strong>Time:</strong> {{ last_image.timestamp|date:"d-m-Y g:i A" }}
+                    {% endfor %}
+                </p>
+            </div>
+        {% endif %}
+
+        {% if matching_visitors %}
+            <div style="border: rgb(58, 57, 57) solid; background-color: white; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5); padding: 30px; height: 300px; margin-left: 100px; margin-top: 70px;">
+                <h2><u>Visitor Details:</u></h2>
+                <br>
+                <p style="font-size: large; font-family: Arial, Helvetica, sans-serif;">
+                    {% for visitor_obj in matching_visitors %}
+                        <strong>Visitor Name:</strong> {{ visitor_obj.visitor_name }}<br>
+                        <strong>Address:</strong> {{ visitor_obj.address }}<br>
+                        <strong>Visitor Mobile No:</strong> {{ visitor_obj.mobile_no }}<br>
+                        <strong>Date of Visit:</strong> {{ last_image.timestamp|date:"d-m-Y g:i A" }}<br>
+                        <!-- Add other fields as needed -->
+                    {% endfor %}
+                </p>
+            </div>
+        {% endif %}
+
+        {% if messages %}
+            <ul class="messages" style="color: red;">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endblock %}
+    </div>
+</body>
+</html>
